@@ -7,10 +7,10 @@ public class DepositAccount extends Account {
     private int monthsDuration;
     private Date lastRenewalDate;
 
-    public DepositAccount(int userId, double balance, String iban, double interestRate, int monthsDuration) {
+    public DepositAccount(int userId, double balance, String iban, double interestRate, int monthsDuration, Date lastRenewalDate) {
         super(userId, balance, iban);
         this.interestRate = interestRate;
         this.monthsDuration = monthsDuration;
-        this.lastRenewalDate = new Date();
+        this.lastRenewalDate = lastRenewalDate;
     }
 }

@@ -5,12 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6cc03198-e9c3-4ea7-a5ab-8d09d94af60e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/banking-app.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/account/CurrentAccount.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/account/CurrentAccount.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/card/Card.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/card/Card.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/card/CardHolder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/card/CardHolder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/card/CardTransaction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/card/CardTransaction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/transfer/Transfer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/transfer/Transfer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,7 +42,7 @@
   &quot;keyToString&quot;: {
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/anama/Documents/fmi/Anul II/Semestrul II/Programare Avansata pe Obiecte/Laborator/Laborator 5&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
@@ -77,11 +77,25 @@
       <workItem from="1711278620246" duration="712000" />
       <workItem from="1711469602313" duration="1759000" />
       <workItem from="1711634869901" duration="36000" />
-      <workItem from="1711791742589" duration="4506000" />
+      <workItem from="1711791742589" duration="7913000" />
+      <workItem from="1711985957507" duration="1760000" />
+      <workItem from="1712067095689" duration="902000" />
+      <workItem from="1712149520257" duration="3248000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>
