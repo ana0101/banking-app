@@ -6,11 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="6cc03198-e9c3-4ea7-a5ab-8d09d94af60e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/account/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/account/Account.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/model/account/CurrentAccount.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/account/CurrentAccount.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/card/Card.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/card/Card.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/card/CardHolder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/card/CardHolder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/card/CardTransaction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/card/CardTransaction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/transfer/Transfer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/transfer/Transfer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/account/DepositAccount.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/account/DepositAccount.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/user/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/user/User.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,6 +19,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -40,11 +40,12 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;Application.ConsoleApp.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/anama/Documents/fmi/Anul II/Semestrul II/Programare Avansata pe Obiecte/Laborator/Laborator 5&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/anama/Documents/fmi/Anul II/Semestrul II/Programare Avansata pe Obiecte/Laborator/Laborator 6&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -80,7 +81,10 @@
       <workItem from="1711791742589" duration="7913000" />
       <workItem from="1711985957507" duration="1760000" />
       <workItem from="1712067095689" duration="902000" />
-      <workItem from="1712149520257" duration="3248000" />
+      <workItem from="1712149520257" duration="4502000" />
+      <workItem from="1712236149487" duration="3966000" />
+      <workItem from="1712300588300" duration="11461000" />
+      <workItem from="1712391458223" duration="1407000" />
     </task>
     <servers />
   </component>
