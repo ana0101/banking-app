@@ -2,11 +2,10 @@ package persistence;
 
 import model.account.Account;
 import model.account.CurrentAccount;
+import model.account.DepositAccount;
 import model.card.Card;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class AccountRepository implements GenericRepository<Account> {
@@ -42,6 +41,25 @@ public class AccountRepository implements GenericRepository<Account> {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public void update(Account account) {
+
+    }
+
+    public void addBalance(Account account, double amount) {
+        account.setBalance(account.getBalance() + amount);
+    }
+
+    public void subtractBalance(Account account, double amount) {
+        account.setBalance(account.getBalance() - amount);
+    }
+
+    @Override
+    public void delete(Account account) {
+        accounts.remove(account);
+    }
+
+    // current account
     public Account getUserCurrentAccount(int userId) {
         return accounts.stream()
                 .filter(account -> account.getUserId() == userId && account instanceof CurrentAccount)
@@ -65,21 +83,23 @@ public class AccountRepository implements GenericRepository<Account> {
         currentAccount.deleteCard(card);
     }
 
-    @Override
-    public void update(Account account) {
-
+    // deposit account
+    public List<Account> getUserDepositAccounts(int userId) {
+        return accounts.stream()
+                .filter(account -> account.getUserId() == userId && account instanceof DepositAccount)
+                .collect(Collectors.toList());
     }
 
-    public void addBalance(Account account, double amount) {
-        account.setBalance(account.getBalance() + amount);
-    }
-
-    public void substractBalance(Account account, double amount) {
-        account.setBalance(account.getBalance() - amount);
-    }
-
-    @Override
-    public void delete(Account account) {
-        accounts.remove(account);
+    public void updateDepositAccount(DepositAccount depositAccount) {
+        Date currentDate = Calendar.getInstance().getTime();
+        Date lastRenewalDate = depositAccount.getLastRenewalDate();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(lastRenewalDate);
+        calendar.add(Calendar.MONTH, depositAccount.getDepositType().getMonthsDuration());
+        Date nextRenewalDate = calendar.getTime();
+        if (!nextRenewalDate.after(currentDate)) {
+            depositAccount.setLastRenewalDate(currentDate);
+            depositAccount.setBalance(depositAccount.getBalance() + depositAccount.getDepositType().getInterestRate()/100 * depositAccount.getBalance());
+        }
     }
 }

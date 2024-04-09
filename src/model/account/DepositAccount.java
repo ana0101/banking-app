@@ -1,23 +1,22 @@
 package model.account;
 
+import java.util.Calendar;
 import java.util.Date;
 
 public class DepositAccount extends Account {
-    private double interestRate;
-    private int monthsDuration;
+    private DepositType depositType;
     private Date lastRenewalDate;
 
-    public DepositAccount(int userId, double balance, double interestRate, int monthsDuration) {
+    public DepositAccount(int userId, double balance, DepositType depositType) {
         super(userId, balance);
-        this.interestRate = interestRate;
-        this.monthsDuration = monthsDuration;
+        this.depositType = depositType;
+        this.lastRenewalDate = Calendar.getInstance().getTime();  // current date
     }
 
     @Override
     public String toString() {
         return "DepositAccount{" +
-                "interestRate=" + interestRate +
-                ", monthsDuration=" + monthsDuration +
+                "depositType=" + depositType +
                 ", lastRenewalDate=" + lastRenewalDate +
                 ", accountId=" + accountId +
                 ", userId=" + userId +
@@ -26,20 +25,8 @@ public class DepositAccount extends Account {
                 '}';
     }
 
-    public double getInterestRate() {
-        return interestRate;
-    }
-
-    public void setInterestRate(double interestRate) {
-        this.interestRate = interestRate;
-    }
-
-    public int getMonthsDuration() {
-        return monthsDuration;
-    }
-
-    public void setMonthsDuration(int monthsDuration) {
-        this.monthsDuration = monthsDuration;
+    public DepositType getDepositType() {
+        return depositType;
     }
 
     public Date getLastRenewalDate() {

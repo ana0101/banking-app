@@ -6,11 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="6cc03198-e9c3-4ea7-a5ab-8d09d94af60e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/account/CurrentAccount.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/account/CurrentAccount.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/transfer/Transfer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/transfer/Transfer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/account/DepositAccount.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/account/DepositAccount.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/persistence/AccountRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/persistence/AccountRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/service/AccountService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/AccountService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/CardTransactionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/CardTransactionService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/view/ConsoleApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/ConsoleApp.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -62,6 +60,26 @@
       <recent name="model.account" />
     </key>
   </component>
+  <component name="RunManager">
+    <configuration name="ConsoleApp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="view.ConsoleApp" />
+      <module name="banking-app" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="view.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.ConsoleApp" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -89,6 +107,8 @@
       <workItem from="1712300588300" duration="11461000" />
       <workItem from="1712391458223" duration="21029000" />
       <workItem from="1712589981528" duration="14056000" />
+      <workItem from="1712667954528" duration="9172000" />
+      <workItem from="1712677650042" duration="968000" />
     </task>
     <servers />
   </component>

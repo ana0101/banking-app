@@ -3,26 +3,35 @@ package view;
 import exception.InvalidDataException;
 import model.account.Account;
 import model.account.CurrentAccount;
+import model.account.DepositType;
 import model.card.Card;
 import model.card.CardTransaction;
 import model.transfer.Transfer;
 import model.user.User;
+import persistence.DepositTypeRepository;
 import service.*;
 
 import java.util.Scanner;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class ConsoleApp {
     private Scanner scanner = new Scanner(System.in);
+    private ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
     private UserService userService = new UserService();
     private AccountService accountService = new AccountService();
     private CardService cardService = new CardService();
     private CardHolderService cardHolderService = new CardHolderService();
     private CardTransactionService cardTransactionService = new CardTransactionService();
     private TransferService transferService = new TransferService();
+    private DepositTypeRepository depositTypeRepository = new DepositTypeRepository();
 
     public static void main(String args[]) throws InvalidDataException {
         ConsoleApp app = new ConsoleApp();
+        app.depositTypeRepository.init();
         app.addData();
+        app.scheduleUpdateDepositAccounts();
         app.showUserMenu();
     }
 
@@ -59,6 +68,15 @@ public class ConsoleApp {
             option = readOption2(new int[]{2, 5});
         }
         executeCurrentAccountOption(option, userId);
+    }
+
+    private void showDepositAccountsMenu(int userId) throws InvalidDataException {
+        System.out.println("1. View deposit accounts");
+        System.out.println("2. Add deposit account");
+        System.out.println("3. Dissolve deposit account");
+        System.out.println("4. Back");
+        int option = readOption(1,4);
+        executeDepositAccountOption(option, userId);
     }
 
     private void showCardMenu(int userId, int currentAccountId) throws InvalidDataException {
@@ -149,11 +167,18 @@ public class ConsoleApp {
                 break;
             case 2:
                 // manage current account
-                boolean hasCurrentAccount = accountService.getUserAccounts(userId).size() > 0;
+                boolean hasCurrentAccount = accountService.getUserCurrentAccount(userId) != null;
                 showCurrentAccountMenu(userId, hasCurrentAccount);
                 break;
             case 3:
                 // manage deposit accounts
+                if (accountService.getUserCurrentAccount(userId) == null) {
+                    System.out.println("You must have a current account in order to create a deposit");
+                    showAccountMenu(userId);
+                }
+                else {
+                    showDepositAccountsMenu(userId);
+                }
                 break;
             case 4:
                 // back
@@ -191,6 +216,64 @@ public class ConsoleApp {
                 showTransferMenu(userId, accountService.getUserCurrentAccount(userId).getAccountId());
                 break;
             case 5:
+                // back
+                showAccountMenu(userId);
+                break;
+        }
+    }
+
+    private void executeDepositAccountOption(int option, int userId) throws InvalidDataException {
+        switch (option) {
+            case 1:
+                // view deposits
+                for (Account account : accountService.getUserDepositAccounts(userId)) {
+                    System.out.println(account);
+                }
+                showDepositAccountsMenu(userId);
+                break;
+            case 2:
+                // add deposit
+                try {
+                    System.out.println("Enter amount: ");
+                    double amount = readDouble();
+                    System.out.println("Deposit types: ");
+                    for (DepositType depositType : depositTypeRepository.getAll()) {
+                        System.out.println(depositType);
+                    }
+                    System.out.println("Enter deposit type id: ");
+                    int typeId = readInt();
+                    DepositType depositType = depositTypeRepository.get(typeId);
+                    if (depositType == null) {
+                        throw new InvalidDataException("Invalid deposit type id");
+                    }
+                    Account currentAccount = accountService.getUserCurrentAccount(userId);
+                    // move the money from the current account to the deposit
+                    accountService.subtractBalance(currentAccount.getAccountId(), amount);
+                    accountService.addDepositAccount(userId, amount, depositType);
+                    showDepositAccountsMenu(userId);
+                }
+                catch (InvalidDataException e) {
+                    System.out.println(e.getMessage());
+                    showDepositAccountsMenu(userId);
+                }
+                break;
+            case 3:
+                // delete deposit
+                try {
+                    System.out.println("Enter deposit account id: ");
+                    int depositAccountId = readInt();
+                    // move the money from the deposit to the current account
+                    Account currentAccount = accountService.getUserCurrentAccount(userId);
+                    accountService.addBalance(currentAccount.getAccountId(), accountService.getAccount(depositAccountId).getBalance());
+                    accountService.deleteDepositAccount(depositAccountId);
+                    showDepositAccountsMenu(userId);
+                }
+                catch (InvalidDataException e) {
+                    System.out.println(e.getMessage());
+                    showDepositAccountsMenu(userId);
+                }
+                break;
+            case 4:
                 // back
                 showAccountMenu(userId);
                 break;
@@ -348,6 +431,25 @@ public class ConsoleApp {
                 showCurrentAccountMenu(userId, true);
                 break;
         }
+    }
+
+    private void updateDepositAccounts() {
+        try {
+            for (User user : userService.getAllUsers()) {
+                for (Account depositAccount : accountService.getUserDepositAccounts(user.getUserId())) {
+                    accountService.updateDepositAccount(depositAccount.getAccountId());
+                    System.out.println("UPDATE FOR USER ID " + user.getUserId() + " DEPOSIT ACCOUNT ID " + depositAccount.getAccountId());
+                }
+            }
+        }
+        catch (InvalidDataException e) {
+            System.out.println("Error updating deposit accounts: " + e.getMessage());
+        }
+    }
+
+    private void scheduleUpdateDepositAccounts() {
+        // update the deposit accounts once every 2 minutes
+        scheduler.scheduleAtFixedRate(this::updateDepositAccounts, 0, 1, TimeUnit.MINUTES);
     }
 
     private int readOption(int a, int b) {
