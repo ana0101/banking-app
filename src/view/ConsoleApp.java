@@ -2,8 +2,10 @@ package view;
 
 import exception.InvalidDataException;
 import model.account.Account;
+import model.account.CurrentAccount;
 import model.card.Card;
 import model.card.CardTransaction;
+import model.transfer.Transfer;
 import model.user.User;
 import service.*;
 
@@ -16,9 +18,11 @@ public class ConsoleApp {
     private CardService cardService = new CardService();
     private CardHolderService cardHolderService = new CardHolderService();
     private CardTransactionService cardTransactionService = new CardTransactionService();
+    private TransferService transferService = new TransferService();
 
     public static void main(String args[]) throws InvalidDataException {
         ConsoleApp app = new ConsoleApp();
+        app.addData();
         app.showUserMenu();
     }
 
@@ -45,13 +49,14 @@ public class ConsoleApp {
         if (hasCurrentAccount) {
             System.out.println("1. View current account");
             System.out.println("3. Manage cards");
-            System.out.println("4. Back");
-            option = readOption2(new int[]{1, 3, 4});
+            System.out.println("4. Manage transfers");
+            System.out.println("5. Back");
+            option = readOption2(new int[]{1, 3, 4, 5});
         }
         else {
             System.out.println("2. Add current account");
-            System.out.println("4. Back");
-            option = readOption2(new int[]{2, 4});
+            System.out.println("5. Back");
+            option = readOption2(new int[]{2, 5});
         }
         executeCurrentAccountOption(option, userId);
     }
@@ -68,10 +73,18 @@ public class ConsoleApp {
 
     private void showTransactionMenu(int userId, int currentAccountId, int cardId) throws InvalidDataException {
         System.out.println("1. View transactions");
-        System.out.println("2. Add card transaction");
+        System.out.println("2. Make a card transaction");
         System.out.println("3. Back");
         int option = readOption(1, 3);
         executeTransactionOption(option, userId, currentAccountId, cardId);
+    }
+
+    private void showTransferMenu(int userId, int currentAccountId) throws InvalidDataException {
+        System.out.println("1. View transfers");
+        System.out.println("2. Make a transfer");
+        System.out.println("3. Back");
+        int option = readOption(1, 3);
+        executeTransferMenu(option, userId, currentAccountId);
     }
 
     private void executeUserOption(int option) throws InvalidDataException {
@@ -174,6 +187,10 @@ public class ConsoleApp {
                 showCardMenu(userId, accountService.getUserCurrentAccount(userId).getAccountId());
                 break;
             case 4:
+                // manage transfers
+                showTransferMenu(userId, accountService.getUserCurrentAccount(userId).getAccountId());
+                break;
+            case 5:
                 // back
                 showAccountMenu(userId);
                 break;
@@ -270,6 +287,7 @@ public class ConsoleApp {
                     double amount = readDouble();
                     System.out.println("Enter description: ");
                     String description = scanner.nextLine();
+                    accountService.subtractBalance(currentAccountId, amount);
                     int cardTransactionId = cardTransactionService.addCardTransaction(cardId, amount, description);
                     cardService.addCardTransaction(cardId, cardTransactionService.getCardTransaction(cardTransactionId));
                     showTransactionMenu(userId, currentAccountId, cardId);
@@ -282,6 +300,52 @@ public class ConsoleApp {
             case 3:
                 // back
                 showCardMenu(userId, currentAccountId);
+                break;
+        }
+    }
+
+    private void executeTransferMenu(int option, int userId, int currentAccountId) throws InvalidDataException {
+        switch (option) {
+            case 1:
+                // view transfers
+                try {
+                    for (Transfer transfer : transferService.getTransfersByAccountId(currentAccountId)) {
+                        System.out.println(transfer);
+                    }
+                    showTransferMenu(userId, currentAccountId);
+                }
+                catch (Exception e) {
+                    System.out.println(e.getMessage());
+                    showTransferMenu(userId, currentAccountId);
+                }
+                break;
+            case 2:
+                // add transfer
+                try {
+                    System.out.println("Enter recipient iban: ");
+                    String recipientIban = scanner.nextLine();
+                    System.out.println("Enter amount: ");
+                    double amount = readDouble();
+                    System.out.println("Enter description: ");
+                    String description = scanner.nextLine();
+                    Account recipientAccount = accountService.getAccountByIban(recipientIban);
+                    if (recipientAccount == null || !(recipientAccount instanceof CurrentAccount)) {
+                        throw new InvalidDataException("Invalid recipient iban");
+                    }
+                    int recipientAccountId = recipientAccount.getAccountId();
+                    accountService.subtractBalance(currentAccountId, amount);
+                    accountService.addBalance(recipientAccountId, amount);
+                    transferService.addTransfer(currentAccountId, recipientAccountId, amount, description);
+                    showTransferMenu(userId, currentAccountId);
+                }
+                catch (Exception e) {
+                    System.out.println(e.getMessage());
+                    showTransferMenu(userId, currentAccountId);
+                }
+                break;
+            case 3:
+                // back
+                showCurrentAccountMenu(userId, true);
                 break;
         }
     }
@@ -330,5 +394,23 @@ public class ConsoleApp {
         else {
             throw new InvalidDataException("Invalid number");
         }
+    }
+
+    private void addData() throws InvalidDataException {
+        int userId = userService.registerUser("user1", "user1", "123", "user1", "123");
+        int currentAccountId = accountService.addCurrentAccount(userId, 100);
+        int cardId = cardService.addCard(currentAccountId);
+        int cardHolderId = cardHolderService.addCardHolder("user1", "user1", "123", cardId);
+        cardService.setCardHolder(cardId, cardHolderService.getCardHolder(cardHolderId));
+        accountService.addCard(currentAccountId, cardService.getCard(cardId));
+        System.out.println("user 1 iban: " + accountService.getAccount(currentAccountId).getIban());
+
+        userId = userService.registerUser("user2", "user2", "124", "user2", "124");
+        currentAccountId = accountService.addCurrentAccount(userId, 100);
+        cardId = cardService.addCard(currentAccountId);
+        cardHolderId = cardHolderService.addCardHolder("user2", "user2", "124", cardId);
+        cardService.setCardHolder(cardId, cardHolderService.getCardHolder(cardHolderId));
+        accountService.addCard(currentAccountId, cardService.getCard(cardId));
+        System.out.println("user 2 iban: " + accountService.getAccount(currentAccountId).getIban());
     }
 }

@@ -29,6 +29,10 @@ public class AccountService {
         return accountRepository.get(accountId);
     }
 
+    public Account getAccountByIban(String iban) {
+        return accountRepository.getByIban(iban);
+    }
+
     public List<Account> getUserAccounts(int userId) {
         return accountRepository.getUserAccounts(userId);
     }
@@ -63,7 +67,7 @@ public class AccountService {
 
     public void deleteCard(int currentAccountId, int cardId) throws InvalidDataException {
         Account account = getAccount(currentAccountId);
-        if (!(account instanceof CurrentAccount)) {
+        if (account == null || !(account instanceof CurrentAccount)) {
             throw new InvalidDataException("Invalid current account id");
         }
         Card card = accountRepository.getCard((CurrentAccount) account, cardId);
@@ -71,5 +75,30 @@ public class AccountService {
             throw new InvalidDataException("Invalid card id");
         }
         accountRepository.deleteCard((CurrentAccount) account, card);
+    }
+
+    public void addBalance(int accountId, double amount) throws InvalidDataException {
+        Account account = getAccount(accountId);
+        if (account == null) {
+            throw new InvalidDataException("Invalid account id");
+        }
+        if (amount < 0) {
+            throw new InvalidDataException("Invalid amount: must be positive");
+        }
+        accountRepository.addBalance(account, amount);
+    }
+
+    public void subtractBalance(int accountId, double amount) throws InvalidDataException {
+        Account account = getAccount(accountId);
+        if (account == null) {
+            throw new InvalidDataException("Invalid account id");
+        }
+        if (amount < 0) {
+            throw new InvalidDataException("Invalid amount: must be positive");
+        }
+        if (amount > account.getBalance()) {
+            throw new InvalidDataException("Invalid amount: must be smaller than or equal to balance");
+        }
+        accountRepository.substractBalance(account, amount);
     }
 }

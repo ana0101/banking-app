@@ -11,7 +11,6 @@ public class CardTransactionService {
 
     public int addCardTransaction(int cardId, double amount, String description) {
         // to do: check if card id valid
-        // to do: check if amount less than balance
         CardTransaction cardTransaction = new CardTransaction(cardId, amount, description);
         return cardTransactionRepository.add(cardTransaction);
     }

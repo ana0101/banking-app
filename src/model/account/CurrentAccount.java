@@ -45,8 +45,6 @@ public class CurrentAccount extends Account {
     }
 
     public void deleteCard(Card card) {
-        for (Card card2: getCards()) {
-            System.out.println(card2);
-        }
+        this.cards.remove(card);
     }
 }

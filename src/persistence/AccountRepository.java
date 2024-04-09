@@ -29,6 +29,13 @@ public class AccountRepository implements GenericRepository<Account> {
                 .orElse(null);
     }
 
+    public Account getByIban(String iban) {
+        return accounts.stream()
+                .filter(account -> account.getIban().equals(iban))
+                .findFirst()
+                .orElse(null);
+    }
+
     public List<Account> getUserAccounts(int userId) {
         return accounts.stream()
                 .filter(account -> account.getUserId() == userId)
@@ -61,6 +68,14 @@ public class AccountRepository implements GenericRepository<Account> {
     @Override
     public void update(Account account) {
 
+    }
+
+    public void addBalance(Account account, double amount) {
+        account.setBalance(account.getBalance() + amount);
+    }
+
+    public void substractBalance(Account account, double amount) {
+        account.setBalance(account.getBalance() - amount);
     }
 
     @Override

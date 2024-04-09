@@ -31,17 +31,14 @@ public class Card {
     }
 
     private static String generateCardNumber() {
-        // Card number prefix (you can change this based on the issuer)
-        String prefix = "4"; // This is a common prefix for Visa cards
+        String prefix = "4";
 
-        // Generate random 15 digits
         Random random = new Random();
         StringBuilder builder = new StringBuilder(prefix);
         for (int i = 0; i < 15; i++) {
             builder.append(random.nextInt(10));
         }
 
-        // Calculate the checksum using Luhn algorithm
         String cardNumberWithoutChecksum = builder.toString();
         int sum = 0;
         boolean alternate = false;
@@ -58,7 +55,6 @@ public class Card {
         }
         int checksum = (sum * 9) % 10;
 
-        // Append the checksum to the card number
         return cardNumberWithoutChecksum + checksum;
     }
 
@@ -66,7 +62,6 @@ public class Card {
         Calendar calendar = Calendar.getInstance();
         Date currentDate = calendar.getTime();
 
-        // Set the expiration date to be three years from the current date
         calendar.add(Calendar.YEAR, 3);
         Date expirationDate = calendar.getTime();
         return expirationDate;
