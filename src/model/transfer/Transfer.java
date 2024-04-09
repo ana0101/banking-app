@@ -1,5 +1,6 @@
 package model.transfer;
 
+import java.util.Calendar;
 import java.util.Date;
 
 public class Transfer {
@@ -17,7 +18,7 @@ public class Transfer {
         this.payerAccountId = payerAccountId;
         this.recipientAccountId = recipientAccountId;
         this.amount = amount;
-        this.date = date;
+        this.date = Calendar.getInstance().getTime();  // current date
         this.description = description;
     }
 }

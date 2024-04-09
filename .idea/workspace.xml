@@ -6,10 +6,17 @@
   <component name="ChangeListManager">
     <list default="true" id="6cc03198-e9c3-4ea7-a5ab-8d09d94af60e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/account/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/account/Account.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/model/account/CurrentAccount.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/account/CurrentAccount.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/account/DepositAccount.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/account/DepositAccount.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/user/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/user/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/card/Card.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/card/Card.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/card/CardHolder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/card/CardHolder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/card/CardTransaction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/card/CardTransaction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/transfer/Transfer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/transfer/Transfer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/persistence/AccountRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/persistence/AccountRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/persistence/GenericRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/persistence/GenericRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/persistence/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/persistence/UserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/service/AccountService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/AccountService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/view/ConsoleApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/ConsoleApp.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,22 +45,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.ConsoleApp.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/anama/Documents/fmi/Anul II/Semestrul II/Programare Avansata pe Obiecte/Laborator/Laborator 6&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.ConsoleApp.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/anama/Documents/fmi/Anul II/Semestrul II/Programare Avansata pe Obiecte/Laborator/Laborator 6",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="model.account" />
@@ -84,7 +92,8 @@
       <workItem from="1712149520257" duration="4502000" />
       <workItem from="1712236149487" duration="3966000" />
       <workItem from="1712300588300" duration="11461000" />
-      <workItem from="1712391458223" duration="1407000" />
+      <workItem from="1712391458223" duration="21029000" />
+      <workItem from="1712589981528" duration="9454000" />
     </task>
     <servers />
   </component>

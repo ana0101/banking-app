@@ -7,10 +7,12 @@ import java.util.ArrayList;
 public class UserRepository implements GenericRepository<User> {
     private ArrayList<User> users = new ArrayList<User>();
 
-    public void add(User user) {
+    public int add(User user) {
         if (!users.contains(user)) {
             users.add(user);
+            return user.getUserId();
         }
+        return 0;
     }
 
     public User get(int id) {

@@ -23,11 +23,30 @@ public class CurrentAccount extends Account {
                 '}';
     }
 
+    public Card getCard(int cardId) {
+        for (Card card : cards) {
+            if (card.getCardId() == cardId) {
+                return card;
+            }
+        }
+        return null;
+    }
+
     public HashSet<Card> getCards() {
         return cards;
     }
 
     public void setCards(HashSet<Card> cards) {
         this.cards = cards;
+    }
+
+    public void addCard(Card card) {
+        this.cards.add(card);
+    }
+
+    public void deleteCard(Card card) {
+        for (Card card2: getCards()) {
+            System.out.println(card2);
+        }
     }
 }

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class UserService {
     private UserRepository userRepository = new UserRepository();
 
-    public void registerUser(String firstName, String lastName, String cnp, String username, String password) throws InvalidDataException {
+    public int registerUser(String firstName, String lastName, String cnp, String username, String password) throws InvalidDataException {
         if (firstName == null || firstName.trim().isEmpty()) {
             throw new InvalidDataException("Invalid first name");
         }
@@ -31,7 +31,7 @@ public class UserService {
             throw new InvalidDataException("Invalid password");
         }
         User user = new User(firstName, lastName, cnp, username, password);
-        userRepository.add(user);
+        return userRepository.add(user);
     }
 
     public User loginUser(String username, String password) throws WrongPasswordException, UsernameException {

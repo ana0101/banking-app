@@ -2,9 +2,10 @@ package view;
 
 import exception.InvalidDataException;
 import model.account.Account;
+import model.card.Card;
+import model.card.CardTransaction;
 import model.user.User;
-import service.AccountService;
-import service.UserService;
+import service.*;
 
 import java.util.Scanner;
 
@@ -12,6 +13,9 @@ public class ConsoleApp {
     private Scanner scanner = new Scanner(System.in);
     private UserService userService = new UserService();
     private AccountService accountService = new AccountService();
+    private CardService cardService = new CardService();
+    private CardHolderService cardHolderService = new CardHolderService();
+    private CardTransactionService cardTransactionService = new CardTransactionService();
 
     public static void main(String args[]) throws InvalidDataException {
         ConsoleApp app = new ConsoleApp();
@@ -50,6 +54,24 @@ public class ConsoleApp {
             option = readOption2(new int[]{2, 4});
         }
         executeCurrentAccountOption(option, userId);
+    }
+
+    private void showCardMenu(int userId, int currentAccountId) throws InvalidDataException {
+        System.out.println("1. View cards");
+        System.out.println("2. Add card");
+        System.out.println("3. Delete card");
+        System.out.println("4. Manage card transactions");
+        System.out.println("5. Back");
+        int option = readOption(1, 5);
+        executeCardOption(option, userId, currentAccountId);
+    }
+
+    private void showTransactionMenu(int userId, int currentAccountId, int cardId) throws InvalidDataException {
+        System.out.println("1. View transactions");
+        System.out.println("2. Add card transaction");
+        System.out.println("3. Back");
+        int option = readOption(1, 3);
+        executeTransactionOption(option, userId, currentAccountId, cardId);
     }
 
     private void executeUserOption(int option) throws InvalidDataException {
@@ -149,10 +171,117 @@ public class ConsoleApp {
                 break;
             case 3:
                 // manage cards
+                showCardMenu(userId, accountService.getUserCurrentAccount(userId).getAccountId());
                 break;
             case 4:
                 // back
                 showAccountMenu(userId);
+                break;
+        }
+    }
+
+    private void executeCardOption(int option, int userId, int currentAccountId) throws InvalidDataException {
+        switch (option) {
+            case 1:
+                // view cards
+                for (Card card : accountService.getCards(currentAccountId)) {
+                    System.out.println(card);
+                }
+                showCardMenu(userId, currentAccountId);
+                break;
+            case 2:
+                // add card
+                try {
+                    System.out.println("Enter holder first name: ");
+                    String holderFirstName = scanner.nextLine();
+                    System.out.println("Enter holder last name: ");
+                    String holderLastName = scanner.nextLine();
+                    System.out.println("Enter holder cnp: ");
+                    String holderCnp = scanner.nextLine();
+                    int cardId = cardService.addCard(currentAccountId);
+                    int cardHolderId = cardHolderService.addCardHolder(holderFirstName, holderLastName, holderCnp, cardId);
+                    cardService.setCardHolder(cardId, cardHolderService.getCardHolder(cardHolderId));
+                    accountService.addCard(currentAccountId, cardService.getCard(cardId));
+                    showCardMenu(userId, currentAccountId);
+                }
+                catch (InvalidDataException e) {
+                    System.out.println(e.getMessage());
+                    showCardMenu(userId, currentAccountId);
+                }
+                break;
+            case 3:
+                // delete card
+                try {
+                    System.out.println("Enter card id: ");
+                    int cardId = readInt();
+                    int cardHolderId = cardService.getCard(cardId).getCardHolder().getCardHolderId();
+                    cardHolderService.deleteCardHolder(cardHolderId);
+                    cardTransactionService.deleteCardTransactionsByCardId(cardId);
+                    cardService.deleteCard(cardId);
+                    accountService.deleteCard(currentAccountId, cardId);
+                    showCardMenu(userId, currentAccountId);
+                }
+                catch (Exception e) {
+                    System.out.println(e.getMessage());
+                    showCardMenu(userId, currentAccountId);
+                }
+                break;
+            case 4:
+                // manage transactions
+                try {
+                    System.out.println("Enter card id: ");
+                    int cardId = readInt();
+                    if (cardService.getCard(cardId) == null) {
+                        throw new InvalidDataException("Invalid card id");
+                    }
+                    showTransactionMenu(userId, currentAccountId, cardId);
+                }
+                catch (InvalidDataException e) {
+                    System.out.println(e.getMessage());
+                    showCardMenu(userId, currentAccountId);
+                }
+                break;
+            case 5:
+                // back
+                showCurrentAccountMenu(userId, true);
+                break;
+        }
+    }
+
+    private void executeTransactionOption(int option, int userId, int currentAccountId, int cardId) throws InvalidDataException {
+        switch(option) {
+            case 1:
+                // view transactions
+                try {
+                    for (CardTransaction cardTransaction : cardService.getCardTransactions(cardId)) {
+                        System.out.println(cardTransaction);
+                    }
+                    showTransactionMenu(userId, currentAccountId, cardId);
+                }
+                catch (InvalidDataException e) {
+                    System.out.println(e.getMessage());
+                    showTransactionMenu(userId, currentAccountId, cardId);
+                }
+                break;
+            case 2:
+                // add transaction
+                try {
+                    System.out.println("Enter amount: ");
+                    double amount = readDouble();
+                    System.out.println("Enter description: ");
+                    String description = scanner.nextLine();
+                    int cardTransactionId = cardTransactionService.addCardTransaction(cardId, amount, description);
+                    cardService.addCardTransaction(cardId, cardTransactionService.getCardTransaction(cardTransactionId));
+                    showTransactionMenu(userId, currentAccountId, cardId);
+                }
+                catch (InvalidDataException e) {
+                    System.out.println(e.getMessage());
+                    showTransactionMenu(userId, currentAccountId, cardId);
+                }
+                break;
+            case 3:
+                // back
+                showCardMenu(userId, currentAccountId);
                 break;
         }
     }
