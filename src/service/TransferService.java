@@ -4,11 +4,14 @@ import exception.InvalidDataException;
 import model.transfer.Transfer;
 import persistence.TransferRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class TransferService {
     public TransferRepository transferRepository = new TransferRepository();
+
+    public List<Transfer> getTransfersByAccountId(int accountId) {
+        return transferRepository.getTransfersByAccountId(accountId);
+    }
 
     public int addTransfer(int payerAccountId, int recipientAccountId, double amount, String description) throws InvalidDataException {
         if (payerAccountId == recipientAccountId) {
@@ -19,13 +22,5 @@ public class TransferService {
         }
         Transfer transfer = new Transfer(payerAccountId, recipientAccountId, amount, description);
         return transferRepository.add(transfer);
-    }
-
-    public Transfer getTransfer(int transferId) {
-        return transferRepository.get(transferId);
-    }
-
-    public List<Transfer> getTransfersByAccountId(int accountId) {
-        return transferRepository.getTransfersByAccountId(accountId);
     }
 }

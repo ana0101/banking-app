@@ -1,41 +1,50 @@
 package persistence;
 
+import config.DatabaseConfiguration;
 import model.card.CardTransaction;
 
-import java.lang.reflect.Array;
+import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
-public class CardTransactionRepository implements GenericRepository<CardTransaction> {
-    private ArrayList<CardTransaction> cardTransactions = new ArrayList<>();
+public class CardTransactionRepository {
 
-    @Override
-    public int add(CardTransaction cardTransaction) {
-        if (!cardTransactions.contains(cardTransaction)) {
-            cardTransactions.add(cardTransaction);
-            return cardTransaction.getTransactionId();
+    public List<CardTransaction> getCardTransactionsByCardId(int cardId) {
+        List <CardTransaction> cardTransactions = new ArrayList<>();
+        String selectSql = "SELECT * FROM card_transaction WHERE card_id = ?;";
+        try (PreparedStatement preparedStatement = DatabaseConfiguration.getConnection().prepareStatement(selectSql)) {
+            preparedStatement.setInt(1, cardId);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) { //try-with-resources
+                while (resultSet.next()) {
+                    cardTransactions.add(mapResultSetToCardTransaction(resultSet));
+                }
+            }
         }
-        return 0;
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return cardTransactions;
     }
 
-    @Override
-    public CardTransaction get(int id) {
-        return cardTransactions.stream()
-                .filter(cardTransaction -> cardTransaction.getTransactionId() == id)
-                .findFirst()
-                .orElse(null);
+    public int add(CardTransaction cardTransaction) {
+        String preparedSql = "{call insert_card_transaction(?, ?, ?, ?, ?)}";
+        try (CallableStatement cstmt = DatabaseConfiguration.getConnection().prepareCall(preparedSql)) {
+            cstmt.setDouble(1, cardTransaction.getAmount());
+            cstmt.setDate(2, new java.sql.Date(cardTransaction.getDate().getTime()));
+            cstmt.setString(3, cardTransaction.getDescription());
+            cstmt.setInt(4, cardTransaction.getCardId());
+            cstmt.registerOutParameter(5, Types.INTEGER);
+            cstmt.execute();
+            return cstmt.getInt(5);
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            return 0;
+        }
     }
 
-    @Override
-    public void update(CardTransaction entity) {
-
-    }
-
-    @Override
-    public void delete(CardTransaction cardTransaction) {
-        cardTransactions.remove(cardTransaction);
-    }
-
-    public void deleteByCardId(int cardId) {
-        cardTransactions.removeIf(cardTransaction -> cardTransaction.getCardId() == cardId);
+    private CardTransaction mapResultSetToCardTransaction(ResultSet resultSet) throws SQLException {
+        return new CardTransaction(resultSet.getInt(1), resultSet.getDouble(2), resultSet.getDate(3),
+                resultSet.getString(4), resultSet.getInt(5));
     }
 }

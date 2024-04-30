@@ -6,6 +6,31 @@
   <component name="ChangeListManager">
     <list default="true" id="6cc03198-e9c3-4ea7-a5ab-8d09d94af60e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/banking-app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/banking-app.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/account/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/account/Account.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/account/CurrentAccount.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/account/CurrentAccount.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/account/DepositAccount.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/account/DepositAccount.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/account/DepositType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/account/DepositType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/card/Card.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/card/Card.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/card/CardHolder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/card/CardHolder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/card/CardTransaction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/card/CardTransaction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/transfer/Transfer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/transfer/Transfer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/user/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/user/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/persistence/AccountRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/persistence/AccountRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/persistence/CardHolderRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/persistence/CardHolderRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/persistence/CardRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/persistence/CardRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/persistence/CardTransactionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/persistence/CardTransactionRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/persistence/DepositTypeRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/persistence/DepositTypeRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/persistence/GenericRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/persistence/TransferRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/persistence/TransferRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/persistence/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/persistence/UserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/service/AccountService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/AccountService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/service/CardHolderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/CardHolderService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/service/CardService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/CardService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/service/CardTransactionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/CardTransactionService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/service/TransferService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/TransferService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/view/ConsoleApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/ConsoleApp.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,7 +69,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/anama/Documents/fmi/Anul II/Semestrul II/Programare Avansata pe Obiecte/Laborator/Laborator 6&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/anama/Documents/proiecte-fmi/banking-app&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -52,6 +77,11 @@
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  },
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;postgresql&quot;
+    ]
   }
 }</component>
   <component name="RecentsManager">
@@ -82,7 +112,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="jdk-21.0.2-openjdk-21.0.2-4caba194b151-4f524021" />
+        <option value="bundled-jdk-9f38398b9061-18abd8497189-intellij.indexing.shared.core-IU-241.14494.240" />
+        <option value="bundled-js-predefined-1d06a55b98c1-74d2a5396914-JavaScript-IU-241.14494.240" />
       </set>
     </attachedChunks>
   </component>
@@ -108,7 +139,13 @@
       <workItem from="1712589981528" duration="14056000" />
       <workItem from="1712667954528" duration="9172000" />
       <workItem from="1712677650042" duration="3537000" />
-      <workItem from="1712839817219" duration="712000" />
+      <workItem from="1712839817219" duration="1911000" />
+      <workItem from="1713445165117" duration="893000" />
+      <workItem from="1713447963809" duration="484000" />
+      <workItem from="1714049870109" duration="4323000" />
+      <workItem from="1714119933767" duration="20526000" />
+      <workItem from="1714373131888" duration="15635000" />
+      <workItem from="1714459304618" duration="6386000" />
     </task>
     <servers />
   </component>

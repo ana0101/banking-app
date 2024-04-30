@@ -1,7 +1,6 @@
 package service;
 
 import exception.InvalidDataException;
-import model.card.Card;
 import model.card.CardHolder;
 import persistence.CardHolderRepository;
 
@@ -21,17 +20,5 @@ public class CardHolderService {
         }
         CardHolder cardHolder = new CardHolder(firstName, lastName, cnp, cardId);
         return cardHolderRepository.add(cardHolder);
-    }
-
-    public CardHolder getCardHolder(int cardHolderId) {
-        return cardHolderRepository.get(cardHolderId);
-    }
-
-    public void deleteCardHolder(int cardHolderId) throws InvalidDataException {
-        CardHolder cardHolder = getCardHolder(cardHolderId);
-        if (cardHolder == null) {
-            throw new InvalidDataException("Invalid card holder id");
-        }
-        cardHolderRepository.delete(cardHolder);
     }
 }

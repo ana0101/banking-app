@@ -13,16 +13,20 @@ public class DepositAccount extends Account {
         this.lastRenewalDate = Calendar.getInstance().getTime();  // current date
     }
 
+    public DepositAccount(int accountId, double balance, String iban, int userId, Date lastRenewalDate, DepositType depositType) {
+        super(accountId, balance, iban, userId);
+        this.lastRenewalDate = lastRenewalDate;
+        this.depositType = depositType;
+    }
+
     @Override
     public String toString() {
-        return "DepositAccount{" +
-                "depositType=" + depositType +
-                ", lastRenewalDate=" + lastRenewalDate +
-                ", accountId=" + accountId +
-                ", userId=" + userId +
-                ", balance=" + balance +
-                ", iban='" + iban + '\'' +
-                '}';
+        return "Deposit Account:\n" +
+                "  account id = " + accountId + "\n" +
+                "  balance = " + balance + "\n" +
+                "  iban = '" + iban +  "\n" +
+                "  last renewal date = " + lastRenewalDate + "\n" +
+                " " + depositType;
     }
 
     public DepositType getDepositType() {
@@ -31,9 +35,5 @@ public class DepositAccount extends Account {
 
     public Date getLastRenewalDate() {
         return lastRenewalDate;
-    }
-
-    public void setLastRenewalDate(Date lastRenewalDate) {
-        this.lastRenewalDate = lastRenewalDate;
     }
 }

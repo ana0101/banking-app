@@ -12,39 +12,15 @@ public class CurrentAccount extends Account {
         this.cards = new HashSet<Card>();
     }
 
+    public CurrentAccount(int accountId, double balance, String iban, int userId) {
+        super(accountId, balance, iban, userId);
+    }
+
     @Override
     public String toString() {
-        return "CurrentAccount{" +
-                "cards=" + cards +
-                ", accountId=" + accountId +
-                ", userId=" + userId +
-                ", balance=" + balance +
-                ", iban='" + iban + '\'' +
-                '}';
-    }
-
-    public Card getCard(int cardId) {
-        for (Card card : cards) {
-            if (card.getCardId() == cardId) {
-                return card;
-            }
-        }
-        return null;
-    }
-
-    public HashSet<Card> getCards() {
-        return cards;
-    }
-
-    public void setCards(HashSet<Card> cards) {
-        this.cards = cards;
-    }
-
-    public void addCard(Card card) {
-        this.cards.add(card);
-    }
-
-    public void deleteCard(Card card) {
-        this.cards.remove(card);
+        return "Current Account:\n" +
+                "  account id = " + accountId + "\n" +
+                "  balance = " + balance + "\n" +
+                "  iban = " + iban +  "\n";
     }
 }

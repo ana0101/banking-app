@@ -6,10 +6,14 @@ import exception.WrongPasswordException;
 import model.user.User;
 import persistence.UserRepository;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class UserService {
     private UserRepository userRepository = new UserRepository();
+
+    public List<User> getAllUsers() {
+        return userRepository.getAll();
+    }
 
     public int registerUser(String firstName, String lastName, String cnp, String username, String password) throws InvalidDataException {
         if (firstName == null || firstName.trim().isEmpty()) {
@@ -43,9 +47,5 @@ public class UserService {
             throw new WrongPasswordException();
         }
         return user;
-    }
-
-    public ArrayList<User> getAllUsers() {
-        return userRepository.getAll();
     }
 }

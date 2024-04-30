@@ -1,5 +1,6 @@
 package view;
 
+import config.DataSetup;
 import exception.InvalidDataException;
 import model.account.Account;
 import model.account.CurrentAccount;
@@ -11,6 +12,7 @@ import model.user.User;
 import persistence.DepositTypeRepository;
 import service.*;
 
+import java.sql.SQLException;
 import java.util.Scanner;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -26,21 +28,29 @@ public class ConsoleApp {
     private CardTransactionService cardTransactionService = new CardTransactionService();
     private TransferService transferService = new TransferService();
     private DepositTypeRepository depositTypeRepository = new DepositTypeRepository();
+    private DataSetup dataSetup = new DataSetup();
 
     public static void main(String args[]) throws InvalidDataException {
         ConsoleApp app = new ConsoleApp();
-        app.depositTypeRepository.init();
-        app.addData();
+        app.setUpData();
         app.scheduleUpdateDepositAccounts();
         app.showUserMenu();
+    }
+
+    private void setUpData() {
+        try {
+            dataSetup.createInsertFunctions();
+        }
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     private void showUserMenu() throws InvalidDataException {
         System.out.println("1. Login");
         System.out.println("2. Register");
         System.out.println("3. Exit");
-        System.out.println("4. See users");
-        int option = readOption(1, 4);
+        int option = readOption(1, 3);
         executeUserOption(option);
     }
 
@@ -147,12 +157,6 @@ public class ConsoleApp {
             case 3:
                 // exit
                 System.exit(0);
-            case 4:
-                for (User user : userService.getAllUsers()) {
-                    System.out.println(user);
-                }
-                showUserMenu();
-                break;
         }
     }
 
@@ -284,7 +288,7 @@ public class ConsoleApp {
         switch (option) {
             case 1:
                 // view cards
-                for (Card card : accountService.getCards(currentAccountId)) {
+                for (Card card : cardService.getCardsByCurrentAccountId(currentAccountId)) {
                     System.out.println(card);
                 }
                 showCardMenu(userId, currentAccountId);
@@ -292,16 +296,14 @@ public class ConsoleApp {
             case 2:
                 // add card
                 try {
+                    int cardId = cardService.addCard(currentAccountId);
                     System.out.println("Enter holder first name: ");
                     String holderFirstName = scanner.nextLine();
                     System.out.println("Enter holder last name: ");
                     String holderLastName = scanner.nextLine();
                     System.out.println("Enter holder cnp: ");
                     String holderCnp = scanner.nextLine();
-                    int cardId = cardService.addCard(currentAccountId);
-                    int cardHolderId = cardHolderService.addCardHolder(holderFirstName, holderLastName, holderCnp, cardId);
-                    cardService.setCardHolder(cardId, cardHolderService.getCardHolder(cardHolderId));
-                    accountService.addCard(currentAccountId, cardService.getCard(cardId));
+                    cardHolderService.addCardHolder(holderFirstName, holderLastName, holderCnp, cardId);
                     showCardMenu(userId, currentAccountId);
                 }
                 catch (InvalidDataException e) {
@@ -314,11 +316,7 @@ public class ConsoleApp {
                 try {
                     System.out.println("Enter card id: ");
                     int cardId = readInt();
-                    int cardHolderId = cardService.getCard(cardId).getCardHolder().getCardHolderId();
-                    cardHolderService.deleteCardHolder(cardHolderId);
-                    cardTransactionService.deleteCardTransactionsByCardId(cardId);
                     cardService.deleteCard(cardId);
-                    accountService.deleteCard(currentAccountId, cardId);
                     showCardMenu(userId, currentAccountId);
                 }
                 catch (Exception e) {
@@ -353,7 +351,7 @@ public class ConsoleApp {
             case 1:
                 // view transactions
                 try {
-                    for (CardTransaction cardTransaction : cardService.getCardTransactions(cardId)) {
+                    for (CardTransaction cardTransaction : cardTransactionService.getCardTransactionsByCardId(cardId)) {
                         System.out.println(cardTransaction);
                     }
                     showTransactionMenu(userId, currentAccountId, cardId);
@@ -371,8 +369,7 @@ public class ConsoleApp {
                     System.out.println("Enter description: ");
                     String description = scanner.nextLine();
                     accountService.subtractBalance(currentAccountId, amount);
-                    int cardTransactionId = cardTransactionService.addCardTransaction(cardId, amount, description);
-                    cardService.addCardTransaction(cardId, cardTransactionService.getCardTransaction(cardTransactionId));
+                    cardTransactionService.addCardTransaction(cardId, amount, description);
                     showTransactionMenu(userId, currentAccountId, cardId);
                 }
                 catch (InvalidDataException e) {
@@ -411,7 +408,7 @@ public class ConsoleApp {
                     double amount = readDouble();
                     System.out.println("Enter description: ");
                     String description = scanner.nextLine();
-                    Account recipientAccount = accountService.getAccountByIban(recipientIban);
+                    Account recipientAccount = accountService.getCurrentAccountByIban(recipientIban);
                     if (recipientAccount == null || !(recipientAccount instanceof CurrentAccount)) {
                         throw new InvalidDataException("Invalid recipient iban");
                     }
@@ -438,7 +435,6 @@ public class ConsoleApp {
             for (User user : userService.getAllUsers()) {
                 for (Account depositAccount : accountService.getUserDepositAccounts(user.getUserId())) {
                     accountService.updateDepositAccount(depositAccount.getAccountId());
-                    System.out.println("UPDATE FOR USER ID " + user.getUserId() + " DEPOSIT ACCOUNT ID " + depositAccount.getAccountId());
                 }
             }
         }
@@ -496,23 +492,5 @@ public class ConsoleApp {
         else {
             throw new InvalidDataException("Invalid number");
         }
-    }
-
-    private void addData() throws InvalidDataException {
-        int userId = userService.registerUser("user1", "user1", "123", "user1", "123");
-        int currentAccountId = accountService.addCurrentAccount(userId, 100);
-        int cardId = cardService.addCard(currentAccountId);
-        int cardHolderId = cardHolderService.addCardHolder("user1", "user1", "123", cardId);
-        cardService.setCardHolder(cardId, cardHolderService.getCardHolder(cardHolderId));
-        accountService.addCard(currentAccountId, cardService.getCard(cardId));
-        System.out.println("user 1 iban: " + accountService.getAccount(currentAccountId).getIban());
-
-        userId = userService.registerUser("user2", "user2", "124", "user2", "124");
-        currentAccountId = accountService.addCurrentAccount(userId, 100);
-        cardId = cardService.addCard(currentAccountId);
-        cardHolderId = cardHolderService.addCardHolder("user2", "user2", "124", cardId);
-        cardService.setCardHolder(cardId, cardHolderService.getCardHolder(cardHolderId));
-        accountService.addCard(currentAccountId, cardService.getCard(cardId));
-        System.out.println("user 2 iban: " + accountService.getAccount(currentAccountId).getIban());
     }
 }

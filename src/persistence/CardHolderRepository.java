@@ -1,36 +1,26 @@
 package persistence;
 
+import config.DatabaseConfiguration;
 import model.card.CardHolder;
 
-import java.util.ArrayList;
+import java.sql.*;
 
-public class CardHolderRepository implements GenericRepository<CardHolder> {
-    private ArrayList<CardHolder> cardHolders = new ArrayList<>();
+public class CardHolderRepository {
 
-    @Override
     public int add(CardHolder cardHolder) {
-        if (!cardHolders.contains(cardHolder)) {
-            cardHolders.add(cardHolder);
-            return cardHolder.getCardHolderId();
+        String preparedSql = "{call insert_card_holder(?, ?, ?, ?, ?)}";
+        try (CallableStatement cstmt = DatabaseConfiguration.getConnection().prepareCall(preparedSql)) {
+            cstmt.setString(1, cardHolder.getFirstName());
+            cstmt.setString(2, cardHolder.getLastName());
+            cstmt.setString(3, cardHolder.getCnp());
+            cstmt.setInt(4, cardHolder.getCardId());
+            cstmt.registerOutParameter(5, Types.INTEGER);
+            cstmt.execute();
+            return cstmt.getInt(5);
         }
-        return 0;
-    }
-
-    @Override
-    public CardHolder get(int id) {
-        return cardHolders.stream()
-                .filter(cardHolder -> cardHolder.getCardHolderId() ==  id)
-                .findFirst()
-                .orElse(null);
-    }
-
-    @Override
-    public void update(CardHolder entity) {
-
-    }
-
-    @Override
-    public void delete(CardHolder cardHolder) {
-        cardHolders.remove(cardHolder);
+        catch (SQLException e) {
+            e.printStackTrace();
+            return 0;
+        }
     }
 }

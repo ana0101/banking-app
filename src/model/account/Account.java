@@ -2,19 +2,23 @@ package model.account;
 
 import java.util.Random;
 
-public abstract class Account {
-    protected static int accountIdCount = 0;
+public class Account {
     protected int accountId;
     protected int userId;
     protected double balance;
     protected String iban;
 
     public Account(int userId, double balance) {
-        accountIdCount ++;
-        this.accountId = accountIdCount;
         this.userId = userId;
         this.balance = balance;
         this.iban = generateIban();
+    }
+
+    public Account(int accountId, double balance, String iban, int userId) {
+        this.accountId = accountId;
+        this.balance = balance;
+        this.iban = iban;
+        this.userId = userId;
     }
 
     private static String generateIban() {
@@ -37,43 +41,25 @@ public abstract class Account {
 
     @Override
     public String toString() {
-        return "Account{" +
-                "accountId=" + accountId +
-                ", userId=" + userId +
-                ", balance=" + balance +
-                ", iban='" + iban + '\'' +
-                '}';
+        return "Account:\n" +
+                "  account id = " + accountId + "\n" +
+                "  balance = " + balance + "\n" +
+                "  iban = " + iban + "\n";
     }
 
     public int getAccountId() {
         return accountId;
     }
 
-    public void setAccountId(int accountId) {
-        this.accountId = accountId;
-    }
-
     public int getUserId() {
         return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
     }
 
     public double getBalance() {
         return balance;
     }
 
-    public void setBalance(double balance) {
-        this.balance = balance;
-    }
-
     public String getIban() {
         return iban;
-    }
-
-    public void setIban(String iban) {
-        this.iban = iban;
     }
 }

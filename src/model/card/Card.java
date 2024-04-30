@@ -3,7 +3,6 @@ package model.card;
 import java.util.*;
 
 public class Card {
-    private static int cardIdCount = 0;
     private int cardId;
     private int currentAccountId;
     private String cardNumber;
@@ -11,23 +10,19 @@ public class Card {
     private CardHolder cardHolder;
     private TreeSet<CardTransaction> cardTransactions;
 
-    public Card(int currentAccountId, CardHolder cardHolder) {
-        cardIdCount ++;
-        this.cardId = cardIdCount;
+    public Card(int currentAccountId) {
         this.currentAccountId = currentAccountId;
         this.cardNumber = generateCardNumber();
         this.expirationDate = generateExpirationDate();
-        this.cardHolder = cardHolder;
         this.cardTransactions = new TreeSet<CardTransaction>();
     }
 
-    public Card(int currentAccountId) {
-        cardIdCount ++;
-        this.cardId = cardIdCount;
+    public Card(int cardId, String cardNumber, Date expirationDate, int currentAccountId, CardHolder cardHolder) {
+        this.cardId = cardId;
+        this.cardNumber = cardNumber;
+        this.expirationDate = expirationDate;
         this.currentAccountId = currentAccountId;
-        this.cardNumber = generateCardNumber();
-        this.expirationDate = generateExpirationDate();
-        this.cardTransactions = new TreeSet<CardTransaction>();
+        this.cardHolder = cardHolder;
     }
 
     private static String generateCardNumber() {
@@ -35,7 +30,7 @@ public class Card {
 
         Random random = new Random();
         StringBuilder builder = new StringBuilder(prefix);
-        for (int i = 0; i < 15; i++) {
+        for (int i = 0; i < 14; i++) {
             builder.append(random.nextInt(10));
         }
 
@@ -58,10 +53,9 @@ public class Card {
         return cardNumberWithoutChecksum + checksum;
     }
 
+
     private static Date generateExpirationDate() {
         Calendar calendar = Calendar.getInstance();
-        Date currentDate = calendar.getTime();
-
         calendar.add(Calendar.YEAR, 3);
         Date expirationDate = calendar.getTime();
         return expirationDate;
@@ -69,14 +63,11 @@ public class Card {
 
     @Override
     public String toString() {
-        return "Card{" +
-                "cardId=" + cardId +
-                ", currentAccountId=" + currentAccountId +
-                ", cardNumber='" + cardNumber + '\'' +
-                ", expirationDate=" + expirationDate +
-                ", cardHolder=" + cardHolder.toString() +
-                ", cardTransactions=" + cardTransactions +
-                '}';
+        return "Card:\n" +
+                "  card id = " + cardId + "\n" +
+                "  card number = " + cardNumber + "\n" +
+                "  expiration date = " + expirationDate + "\n" +
+                " " + cardHolder.toString();
     }
 
     @Override
@@ -92,63 +83,19 @@ public class Card {
         return Objects.hash(cardId, currentAccountId, cardNumber, expirationDate);
     }
 
-    public static int getCardIdCount() {
-        return cardIdCount;
-    }
-
-    public static void setCardIdCount(int cardIdCount) {
-        Card.cardIdCount = cardIdCount;
-    }
-
     public int getCardId() {
         return cardId;
-    }
-
-    public void setCardId(int cardId) {
-        this.cardId = cardId;
     }
 
     public int getCurrentAccountId() {
         return currentAccountId;
     }
 
-    public void setCurrentAccountId(int currentAccountId) {
-        this.currentAccountId = currentAccountId;
-    }
-
     public String getCardNumber() {
         return cardNumber;
     }
 
-    public void setCardNumber(String cardNumber) {
-        this.cardNumber = cardNumber;
-    }
-
     public Date getExpirationDate() {
         return expirationDate;
-    }
-
-    public void setExpirationDate(Date expirationDate) {
-        this.expirationDate = expirationDate;
-    }
-
-    public CardHolder getCardHolder() {
-        return cardHolder;
-    }
-
-    public void setCardHolder(CardHolder cardHolder) {
-        this.cardHolder = cardHolder;
-    }
-
-    public TreeSet<CardTransaction> getCardTransactions() {
-        return cardTransactions;
-    }
-
-    public void setCardTransactions(TreeSet<CardTransaction> cardTransactions) {
-        this.cardTransactions = cardTransactions;
-    }
-
-    public void addCardTransaction(CardTransaction cardTransaction) {
-        this.cardTransactions.add(cardTransaction);
     }
 }

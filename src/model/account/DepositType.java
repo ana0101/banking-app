@@ -1,25 +1,22 @@
 package model.account;
 
 public class DepositType {
-    private static int depositTypeIdCount = 0;
     private final int depositTypeId;
     private final int monthsDuration;
     private final double interestRate;
 
-    public DepositType(int monthsDuration, double interestRate) {
-        depositTypeIdCount ++;
-        this.depositTypeId = depositTypeIdCount;
+    public DepositType(int depositTypeId, int monthsDuration, double interestRate) {
+        this.depositTypeId = depositTypeId;
         this.monthsDuration = monthsDuration;
         this.interestRate = interestRate;
     }
 
     @Override
     public String toString() {
-        return "DepositType{" +
-                "depositTypeId=" + depositTypeId +
-                ", monthsDuration=" + monthsDuration +
-                ", interestRate=" + interestRate +
-                '}';
+        return "Deposit Type:\n" +
+                "  deposit type id = " + depositTypeId + "\n" +
+                "  months duration = " + monthsDuration + "\n" +
+                "  interest rate = " + interestRate + "\n";
     }
 
     public int getDepositTypeId() {
