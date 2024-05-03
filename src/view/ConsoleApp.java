@@ -29,6 +29,7 @@ public class ConsoleApp {
     private TransferService transferService = new TransferService();
     private DepositTypeRepository depositTypeRepository = new DepositTypeRepository();
     private DataSetup dataSetup = new DataSetup();
+    private AuditService auditService = AuditService.getInstance();
 
     public static void main(String args[]) throws InvalidDataException {
         ConsoleApp app = new ConsoleApp();
@@ -126,6 +127,7 @@ public class ConsoleApp {
                     System.out.println("Enter password: ");
                     String password = scanner.nextLine();
                     userId = userService.loginUser(username, password).getUserId();
+                    auditService.log("Login");
                     showAccountMenu(userId);
                 }
                 catch (Exception e) {
@@ -147,6 +149,7 @@ public class ConsoleApp {
                     System.out.println("Enter password: ");
                     String password = scanner.nextLine();
                     userService.registerUser(firstName, lastName, cnp, username, password);
+                    auditService.log("Register");
                     showUserMenu();
                 }
                 catch (InvalidDataException e) {
@@ -167,6 +170,7 @@ public class ConsoleApp {
                 for (Account account : accountService.getUserAccounts(userId)) {
                     System.out.println(account);
                 }
+                auditService.log("View accounts");
                 showAccountMenu(userId);
                 break;
             case 2:
@@ -196,6 +200,7 @@ public class ConsoleApp {
             case 1:
                 // view current account
                 System.out.println(accountService.getUserCurrentAccount(userId));
+                auditService.log("View current account");
                 showCurrentAccountMenu(userId, true);
                 break;
             case 2:
@@ -204,6 +209,7 @@ public class ConsoleApp {
                     System.out.println("Enter balance: ");
                     double balance = readDouble();
                     accountService.addCurrentAccount(userId, balance);
+                    auditService.log("Add current account");
                     showCurrentAccountMenu(userId, true);
                 }
                 catch (InvalidDataException e) {
@@ -233,6 +239,7 @@ public class ConsoleApp {
                 for (Account account : accountService.getUserDepositAccounts(userId)) {
                     System.out.println(account);
                 }
+                auditService.log("View deposit accounts");
                 showDepositAccountsMenu(userId);
                 break;
             case 2:
@@ -254,6 +261,7 @@ public class ConsoleApp {
                     // move the money from the current account to the deposit
                     accountService.subtractBalance(currentAccount.getAccountId(), amount);
                     accountService.addDepositAccount(userId, amount, depositType);
+                    auditService.log("Add deposit account");
                     showDepositAccountsMenu(userId);
                 }
                 catch (InvalidDataException e) {
@@ -270,6 +278,7 @@ public class ConsoleApp {
                     Account currentAccount = accountService.getUserCurrentAccount(userId);
                     accountService.addBalance(currentAccount.getAccountId(), accountService.getAccount(depositAccountId).getBalance());
                     accountService.deleteDepositAccount(depositAccountId);
+                    auditService.log("Delete deposit account");
                     showDepositAccountsMenu(userId);
                 }
                 catch (InvalidDataException e) {
@@ -291,6 +300,7 @@ public class ConsoleApp {
                 for (Card card : cardService.getCardsByCurrentAccountId(currentAccountId)) {
                     System.out.println(card);
                 }
+                auditService.log("View cards");
                 showCardMenu(userId, currentAccountId);
                 break;
             case 2:
@@ -304,6 +314,7 @@ public class ConsoleApp {
                     System.out.println("Enter holder cnp: ");
                     String holderCnp = scanner.nextLine();
                     cardHolderService.addCardHolder(holderFirstName, holderLastName, holderCnp, cardId);
+                    auditService.log("Add card");
                     showCardMenu(userId, currentAccountId);
                 }
                 catch (InvalidDataException e) {
@@ -317,6 +328,7 @@ public class ConsoleApp {
                     System.out.println("Enter card id: ");
                     int cardId = readInt();
                     cardService.deleteCard(cardId);
+                    auditService.log("Delete card");
                     showCardMenu(userId, currentAccountId);
                 }
                 catch (Exception e) {
@@ -354,6 +366,7 @@ public class ConsoleApp {
                     for (CardTransaction cardTransaction : cardTransactionService.getCardTransactionsByCardId(cardId)) {
                         System.out.println(cardTransaction);
                     }
+                    auditService.log("View card transactions");
                     showTransactionMenu(userId, currentAccountId, cardId);
                 }
                 catch (InvalidDataException e) {
@@ -370,6 +383,7 @@ public class ConsoleApp {
                     String description = scanner.nextLine();
                     accountService.subtractBalance(currentAccountId, amount);
                     cardTransactionService.addCardTransaction(cardId, amount, description);
+                    auditService.log("Add card transaction");
                     showTransactionMenu(userId, currentAccountId, cardId);
                 }
                 catch (InvalidDataException e) {
@@ -392,6 +406,7 @@ public class ConsoleApp {
                     for (Transfer transfer : transferService.getTransfersByAccountId(currentAccountId)) {
                         System.out.println(transfer);
                     }
+                    auditService.log("View transfers");
                     showTransferMenu(userId, currentAccountId);
                 }
                 catch (Exception e) {
@@ -416,6 +431,7 @@ public class ConsoleApp {
                     accountService.subtractBalance(currentAccountId, amount);
                     accountService.addBalance(recipientAccountId, amount);
                     transferService.addTransfer(currentAccountId, recipientAccountId, amount, description);
+                    auditService.log("Add transfer");
                     showTransferMenu(userId, currentAccountId);
                 }
                 catch (Exception e) {
@@ -435,6 +451,7 @@ public class ConsoleApp {
             for (User user : userService.getAllUsers()) {
                 for (Account depositAccount : accountService.getUserDepositAccounts(user.getUserId())) {
                     accountService.updateDepositAccount(depositAccount.getAccountId());
+                    auditService.log("Update deposit account");
                 }
             }
         }

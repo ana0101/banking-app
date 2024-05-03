@@ -6,30 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="6cc03198-e9c3-4ea7-a5ab-8d09d94af60e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/banking-app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/banking-app.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/account/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/account/Account.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/account/CurrentAccount.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/account/CurrentAccount.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/account/DepositAccount.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/account/DepositAccount.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/account/DepositType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/account/DepositType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/card/Card.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/card/Card.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/card/CardHolder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/card/CardHolder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/card/CardTransaction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/card/CardTransaction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/transfer/Transfer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/transfer/Transfer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/user/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/user/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/persistence/AccountRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/persistence/AccountRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/persistence/CardHolderRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/persistence/CardHolderRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/persistence/CardRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/persistence/CardRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/persistence/CardTransactionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/persistence/CardTransactionRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/persistence/DepositTypeRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/persistence/DepositTypeRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/persistence/GenericRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/persistence/TransferRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/persistence/TransferRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/persistence/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/persistence/UserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/AccountService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/AccountService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/CardHolderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/CardHolderService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/CardService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/CardService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/CardTransactionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/CardTransactionService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/TransferService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/TransferService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/config/DatabaseConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/config/DatabaseConfiguration.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/view/ConsoleApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/ConsoleApp.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -145,7 +122,8 @@
       <workItem from="1714049870109" duration="4323000" />
       <workItem from="1714119933767" duration="20526000" />
       <workItem from="1714373131888" duration="15635000" />
-      <workItem from="1714459304618" duration="6386000" />
+      <workItem from="1714459304618" duration="8251000" />
+      <workItem from="1714736504027" duration="692000" />
     </task>
     <servers />
   </component>
